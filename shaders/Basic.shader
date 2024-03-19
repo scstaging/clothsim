@@ -48,7 +48,7 @@ void main()
 
     // Lighting
     vec3 lightColor = vec3(1.0, 1.0, 1.0);
-    vec3 lightPos = vec3(0.5, -2.0, -1.0);
+    vec3 lightPos = vec3(0.5, -2.5, 2.0);
     vec3 norm = normalize(Normal);
     vec3 lightDir = normalize(lightPos - FragPos3); 
     float diff = max(dot(norm, lightDir), 0.0);

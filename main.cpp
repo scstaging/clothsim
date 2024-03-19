@@ -103,9 +103,14 @@ int main(void)
                 float yPos = std::cos(ySegment * PI);
                 float zPos = std::sin(xSegment * 2.0f * PI) * std::sin(ySegment * PI);
 
+                // Sets position and texture coordinates
                 Particle sphereParticle;
                 sphereParticle.position = glm::vec3((xPos / 2.0f) + 0.5f, (yPos / 2.0f) - 1.0f, (zPos / 2.0f) - 1.0f);
                 sphereParticle.textureCoordinates = glm::vec2(xSegment, ySegment);
+
+                // Calculate normal (direction from the center of the sphere to the vertex)
+                glm::vec3 normal = glm::normalize(sphereParticle.position - glm::vec3(0.5f, -0.5f, -1.0f)); // Center of the sphere
+                sphereParticle.normal = normal;
 
                 sphereVertices.push_back(sphereParticle);
             }

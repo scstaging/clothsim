@@ -14,6 +14,7 @@ std::vector<Particle> Cloth::initializeClothVertexArray(int clothWidth, int clot
             Particle particle;
             particle.position = glm::vec3(x, y, -1.0f);
             particle.textureCoordinates = glm::vec2(x, y);
+            particle.normal = glm::vec3(0.0f, 0.0f, 0.0f);
 
             clothVertices.push_back(particle);
         }
@@ -31,8 +32,8 @@ std::vector<Particle> Cloth::initializeClothVertexArray(int clothWidth, int clot
             // Compute face normals for two triangles forming the quad
             glm::vec3 normal1 = glm::cross(clothVertices[index2].position - clothVertices[index1].position,
                 clothVertices[index3].position - clothVertices[index1].position);
-            glm::vec3 normal2 = glm::cross(clothVertices[index3].position - clothVertices[index2].position,
-                clothVertices[index4].position - clothVertices[index2].position);
+            glm::vec3 normal2 = glm::cross(clothVertices[index2].position - clothVertices[index3].position,
+                clothVertices[index4].position - clothVertices[index3].position);
 
             // Accumulate normals to each vertex
             clothVertices[index1].normal += normal1 + normal2;
