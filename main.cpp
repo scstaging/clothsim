@@ -237,11 +237,9 @@ int main(void)
 #endif
 
         std::string src = getCurrentPath();
-        
-        std::cout << "Zach not getting tap in: " << src + "\\shaders\\Basic.shader" << std::endl;
 
         // Creates shader off of input file
-        Shader shader(src + "\\shaders\\Basic.shader");
+        Shader shader(src + "/shaders/Basic.shader");
 
         // Binds shader to program
         shader.bind();
@@ -253,7 +251,7 @@ int main(void)
         float ar = (float)WINDOW_WIDTH / WINDOW_HEIGHT;
 
         // Creates texture buffer and binds to slot 0
-        Texture texture(src + "\\textures\\cloth.png");
+        Texture texture(src + "/textures/cloth.png");
         texture.bind(0);
 
         // Sets uniform location to texture at slot 0
