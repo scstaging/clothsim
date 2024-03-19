@@ -43,6 +43,37 @@ void Camera::inputs(GLFWwindow* window)
         origin += glm::normalize(glm::cross(lookat, up)) * cameraSpeed;
     }
 
+    if (!(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS))
+    {
+            // Left Mouse
+            if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+                float angle = 0.5f;
+                glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(angle), up);
+                lookat = glm::vec3(rotation * glm::vec4(lookat, 1.0f));
+            }
+
+            // Right Mouse
+            if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
+                float angle = 0.5f;
+                glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(-angle), up); // Negative angle for right rotation
+                lookat = glm::vec3(rotation * glm::vec4(lookat, 1.0f));
+            }
+    }
+
+    // E
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
+        float angle = 0.5f;
+        glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::cross(lookat, up));
+        lookat = glm::vec3(rotation * glm::vec4(lookat, 1.0f));
+    }
+
+    // R
+    if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
+        float angle = 0.5f;
+        glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(-angle), glm::cross(lookat, up)); // Negative angle for right rotation
+        lookat = glm::vec3(rotation * glm::vec4(lookat, 1.0f));
+    }
+
     // Additional logic for moving up and down
     if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS) {
         if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
