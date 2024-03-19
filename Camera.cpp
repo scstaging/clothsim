@@ -43,35 +43,39 @@ void Camera::inputs(GLFWwindow* window)
         origin += glm::normalize(glm::cross(lookat, up)) * cameraSpeed;
     }
 
+    // Globals
+    float yaw = 0.0f;
+    float pitch = 0.0f;
+    float sensitivity = 0.1f; // Adjust this value for rotation speed
+    bool firstClick = true;
+    double lastX, lastY;
+
+    // Settings
+    const unsigned int SCR_WIDTH = 1920;
+    const unsigned int SCR_HEIGHT = 1080;
+    const float ROTATION_SPEED = 0.001f;
+
     if (!(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS))
     {
-            // Left Mouse
-            if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-                float angle = 0.5f;
-                glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(angle), up);
-                lookat = glm::vec3(rotation * glm::vec4(lookat, 1.0f));
-            }
+        if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+        {
+            double xpos, ypos;
 
-            // Right Mouse
-            if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
-                float angle = 0.5f;
-                glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(-angle), up); // Negative angle for right rotation
-                lookat = glm::vec3(rotation * glm::vec4(lookat, 1.0f));
-            }
-    }
+            glfwGetCursorPos(window, &xpos, &ypos);
 
-    // E
-    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
-        float angle = 0.5f;
-        glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::cross(lookat, up));
-        lookat = glm::vec3(rotation * glm::vec4(lookat, 1.0f));
-    }
+            xpos -= SCR_WIDTH / 2;
+            ypos -= SCR_HEIGHT / 2;
 
-    // R
-    if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
-        float angle = 0.5f;
-        glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(-angle), glm::cross(lookat, up)); // Negative angle for right rotation
-        lookat = glm::vec3(rotation * glm::vec4(lookat, 1.0f));
+            // Calculate rotation angle
+            float angleX = -xpos * ROTATION_SPEED;
+            float angleY = -ypos * ROTATION_SPEED;
+            
+            // Apply rotation to camera
+            glm::mat4 rotationX = glm::rotate(glm::mat4(1.0f), glm::radians(angleX), up);
+            glm::mat4 rotationY = glm::rotate(glm::mat4(1.0f), glm::radians(angleY), glm::normalize(glm::cross(lookat, up)));
+
+            lookat = glm::mat3(rotationY) * glm::mat3(rotationX) * lookat;
+        }
     }
 
     // Additional logic for moving up and down
