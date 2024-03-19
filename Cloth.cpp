@@ -145,6 +145,12 @@ void Cloth::calculateForces(std::vector<Particle>& particles, std::map<Particle*
 
     int CLOTH_WIDTH = 10, CLOTH_HEIGHT = 10;
 
+    // Reset the normals
+    for (int i = 0; i < particles.size(); i++)
+    {
+        particles[i].normal = glm::vec3(0.0f, 0.0f, 0.0f);
+    }
+
     // Sets normals
     for (int i = 0; i < CLOTH_WIDTH - 1; ++i) {
         for (int j = 0; j < CLOTH_HEIGHT - 1; ++j) {
@@ -167,6 +173,12 @@ void Cloth::calculateForces(std::vector<Particle>& particles, std::map<Particle*
             particles[index4].normal += normal1 + normal2;
         }
     }
+
+    // Normalize normals
+    for (auto& particle : particles) {
+        particle.normal = glm::normalize(particle.normal);
+    }
+
 
 }
 
