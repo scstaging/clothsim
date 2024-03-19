@@ -1,4 +1,5 @@
 #include "Shader.h"
+#include <stdlib.h>
 
 Shader::Shader(const std::string& fp) : fp(fp), renderer_id(0)
 {
