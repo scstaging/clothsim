@@ -10,6 +10,7 @@
 struct Particle {
     glm::vec3 position;
     glm::vec2 textureCoordinates;
+    glm::vec3 normal;
 };
 
 struct Spring {

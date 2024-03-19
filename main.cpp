@@ -154,6 +154,9 @@ int main(void)
         // Texture coordinates
         lo.add<float>(2);
 
+        // Normal Coordinates
+        lo.add<float>(3);
+
 #ifdef WITH_SPHERE
         //*** TESTING ***//
         VArray va2;
