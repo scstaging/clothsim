@@ -37,6 +37,8 @@ in vec4 FragPos;
 uniform vec4 u_Color;
 uniform sampler2D u_Texture;
 
+uniform int is_Bidirectional;
+
 void main()
 {
     // Get texture color
@@ -51,7 +53,12 @@ void main()
     vec3 lightPos = vec3(0.5, -2.0, 10.0);
     vec3 norm = normalize(Normal);
     vec3 lightDir = normalize(lightPos - FragPos3); 
-    float diff = max(dot(norm, lightDir), 0.0);
+    float temp = dot(norm, lightDir);
+
+    if (is_Bidirectional == 1)
+        temp = abs(temp);
+
+    float diff = max(temp, 0.0);
     vec3 diffuse = diff * lightColor;
     vec3 result = diffuse * textureColor3;
     vec4 FragColor = vec4(result, 1.0);

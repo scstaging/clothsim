@@ -306,9 +306,13 @@ int main(void)
         // Wireframe
         // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+        // Changeables
         float wind = 0.0f;
         float mass = 0.5f;
         bool isFixed = true;
+
+        // Bidirectional Lighting
+        shader.setUniform1i("is_Bidirectional", 1);
 
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
@@ -363,8 +367,14 @@ int main(void)
             // Sets projection matrix uniform
             shader.setUniformMat4f("u_Camera", viewMat);
 
+            // Bidirectional Lighting ON (Cloth)
+            shader.setUniform1i("is_Bidirectional", 1);
+
             // Draws triangles
             renderer.draw(va, ibo, shader, false);
+
+            // Bidirectional Lighting OFF (Sphere)
+            shader.setUniform1i("is_Bidirectional", 0);
 
 #ifdef WITH_SPHERE
             renderer2.draw(va2, ibo2, shader, true);

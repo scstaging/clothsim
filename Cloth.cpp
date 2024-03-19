@@ -226,9 +226,9 @@ void Cloth::checkIntersection(std::vector<Particle>& particles, std::vector<Part
         {
             glm::vec3 deltaP = particles[i].position - sphereVertices[j].position;
             float dist = glm::length(deltaP);
-            glm::vec3 zeroes(-particles[i].position.x/30, -particles[i].position.y/30, -particles[i].position.z/30);
+            glm::vec3 zeroes(-particles[i].position.x/150, -particles[i].position.y/ 150, -particles[i].position.z/ 150);
 
-            if (dist < 0.03)
+            if (dist < 0.05)
                 velocities[&particles[i]] = zeroes;
         }
     }
