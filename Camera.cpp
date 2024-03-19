@@ -1,4 +1,7 @@
 #include "Camera.h"
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 
 Camera::Camera(int width, int height, glm::vec3 origin)
 {
@@ -55,14 +58,17 @@ void Camera::inputs(GLFWwindow* window)
     const unsigned int SCR_HEIGHT = 1080;
     const float ROTATION_SPEED = 0.001f;
 
-    if (!(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS))
+    // If not adjusting simulation attributes and shift is not pressed then pseudo-trackball is activated
+    if (!ImGui::IsWindowFocused(ImGuiHoveredFlags_AnyWindow) && !(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS))
     {
         if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
         {
+            // Get cursor position
             double xpos, ypos;
 
             glfwGetCursorPos(window, &xpos, &ypos);
 
+            // Center the trackball from top left to middle
             xpos -= SCR_WIDTH / 2;
             ypos -= SCR_HEIGHT / 2;
 
@@ -74,6 +80,7 @@ void Camera::inputs(GLFWwindow* window)
             glm::mat4 rotationX = glm::rotate(glm::mat4(1.0f), glm::radians(angleX), up);
             glm::mat4 rotationY = glm::rotate(glm::mat4(1.0f), glm::radians(angleY), glm::normalize(glm::cross(lookat, up)));
 
+            // Update lookat
             lookat = glm::mat3(rotationY) * glm::mat3(rotationX) * lookat;
         }
     }

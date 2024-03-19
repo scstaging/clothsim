@@ -381,9 +381,11 @@ int main(void)
 #endif
 
             {
+                ImGui::Begin("Simulation Attributes", nullptr, ImGuiWindowFlags_NoMove);
                 ImGui::SliderFloat("Wind Intensity", &wind, 0.0f, 0.5f);
                 ImGui::SliderFloat("Change Particle Mass", &mass, 0.1f, 0.5f);
                 ImGui::Checkbox("Unfix Corners", &isFixed);
+                ImGui::End();
             }
 
             ImGui::Render();
