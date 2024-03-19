@@ -17,19 +17,7 @@ public:
 
 	// Layout templates
 	template<typename T>
-	inline void add(unsigned int count);
-	
-	// Float layout
-	template<>
-	void add<float>(unsigned int count);
-
-	// Unsigned int layout
-	template<>
-	void add<unsigned int>(unsigned int count);
-
-	// Unsigned char layout
-	template<>
-	void add<unsigned char>(unsigned int count);
+	void add(unsigned int count);
 
 	// Getters
 	unsigned int getStride();
@@ -41,3 +29,15 @@ private:
 	unsigned int m_Stride;
 
 };
+
+// Float layout
+template<>
+void VBufferLayout::add<float>(unsigned int count);
+
+// Unsigned int layout
+template<>
+void VBufferLayout::add<unsigned int>(unsigned int count);
+
+// Unsigned char layout
+template<>
+void VBufferLayout::add<unsigned char>(unsigned int count);
