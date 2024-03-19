@@ -9,22 +9,6 @@ if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET clothsimulation PROPERTY CXX_STANDARD 20)
 endif()
 
-if(NOT DEFINED ENV{VCPKG_ROOT})
-    message(FATAL_ERROR "VCPKG not found. Set the VCPKG_ROOT environment variable.")
-endif()
-
-set(VCPKG_DIR "$ENV{VCPKG_ROOT}")
-
-message(STATUS "$ENV{VCPKG_ROOT}=${$ENV{VCPKG_ROOT}}")
-
-set(CMAKE_TOOLCHAIN_FILE VCPKG_DIR/scripts/buildsystems/vcpkg.cmake)
-
-set(Eigen3_DIR vendors/packages/eigen3_x64-windows/share/eigen3)
-set(glm_DIR vendors/packages/glm_x64-windows/share/glm)
-set(GLEW_DIR vendors/packages/glew_x64-windows/share/glew)
-set(glfw3_DIR vendors/packages/glfw3_x64-windows/share/glfw3)
-set(imgui_DIR vendors/packages/imgui_x64-windows/share/imgui)
-
 # TODO: Add tests and install targets if needed.
   find_package(glm CONFIG REQUIRED)
   target_link_libraries(clothsimulation PRIVATE glm::glm)

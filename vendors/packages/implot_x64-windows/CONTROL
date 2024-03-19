@@ -1,7 +1,0 @@
-Package: implot
-Version: 0.16
-Depends: imgui, vcpkg-cmake, vcpkg-cmake-config
-Architecture: x64-windows
-Multi-Arch: same
-Abi: 0a5e0f38fd194d08539395250e669528902127346a649ca541c6bd1f38fb1cc3
-Description: Advanced 2D Plotting for Dear ImGui

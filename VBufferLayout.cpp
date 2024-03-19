@@ -8,7 +8,7 @@ VBufferLayout::VBufferLayout() : m_Stride(0)
 
 // Layout templates
 template<typename T>
-void VBufferLayout::add(unsigned int count)
+inline void VBufferLayout::add(unsigned int count)
 {
 
 }

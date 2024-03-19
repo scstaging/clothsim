@@ -17,7 +17,7 @@ public:
 
 	// Layout templates
 	template<typename T>
-	void add(unsigned int count);
+	inline void add(unsigned int count);
 	
 	// Float layout
 	template<>
