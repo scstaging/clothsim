@@ -48,7 +48,6 @@ std::vector<Particle> Cloth::initializeClothVertexArray(int clothWidth, int clot
         particle.normal = glm::normalize(particle.normal);
     }
 
-
     return clothVertices;
 }
 
@@ -142,6 +141,31 @@ void Cloth::calculateForces(std::vector<Particle>& particles, std::map<Particle*
         // Equal and opposite forces
         forces[&particle1] += springForce;
         forces[&particle2] -= springForce;
+    }
+
+    int CLOTH_WIDTH = 10, CLOTH_HEIGHT = 10;
+
+    // Sets normals
+    for (int i = 0; i < CLOTH_WIDTH - 1; ++i) {
+        for (int j = 0; j < CLOTH_HEIGHT - 1; ++j) {
+            // Indices of the current quad
+            int index1 = i * CLOTH_WIDTH + j;
+            int index2 = index1 + 1;
+            int index3 = (i + 1) * CLOTH_WIDTH + j;
+            int index4 = index3 + 1;
+
+            // Compute face normals for two triangles forming the quad
+            glm::vec3 normal1 = glm::cross(particles[index2].position - particles[index1].position,
+                particles[index3].position - particles[index1].position);
+            glm::vec3 normal2 = glm::cross(particles[index2].position - particles[index3].position,
+                particles[index4].position - particles[index3].position);
+
+            // Accumulate normals to each vertex
+            particles[index1].normal += normal1 + normal2;
+            particles[index2].normal += normal1 + normal2;
+            particles[index3].normal += normal1 + normal2;
+            particles[index4].normal += normal1 + normal2;
+        }
     }
 
 }
