@@ -238,7 +238,7 @@ int main(void)
 
         std::string src = getCurrentPath();
         
-        std::cout << "Zach not getting tap in: " << src << std::endl;
+        std::cout << "Zach not getting tap in: " << src + "\\shaders\\Basic.shader" << std::endl;
 
         // Creates shader off of input file
         Shader shader(src + "\\shaders\\Basic.shader");
