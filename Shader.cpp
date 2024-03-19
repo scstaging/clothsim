@@ -72,6 +72,7 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
         glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
 
         // Allocates on stack dynamically
+        // OOOO DANGEROUS OOOOOOOOO
         char* message = (char*) alloca(length * sizeof(char));
 
         // Gets log info passing in size of log message
