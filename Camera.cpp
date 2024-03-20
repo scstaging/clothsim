@@ -81,7 +81,12 @@ void Camera::inputs(GLFWwindow* window)
             glm::mat4 rotationY = glm::rotate(glm::mat4(1.0f), glm::radians(angleY), glm::normalize(glm::cross(lookat, up)));
 
             // Update lookat
-            lookat = glm::mat3(rotationY) * glm::mat3(rotationX) * lookat;
+            lookat = glm::mat3(rotationX) * lookat;
+
+            // Rotate about objects
+            glm::mat4 translateX = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+            origin = glm::mat3(rotationX) * origin;
+
         }
     }
 
