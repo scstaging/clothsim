@@ -134,8 +134,13 @@ void Cloth::calculateForces(std::vector<Particle>& particles, std::map<Particle*
         // Difference in velocities
         glm::vec3 deltaV = velocities[&particle1] - velocities[&particle2];
 
+        // Gets stiffness force
         float f1 = -springs[i].ks * (dist - springs[i].restLength);
+        
+        // Get dampening force (dampening constant is negative)
         float f2 = springs[i].kd * (glm::dot(deltaV, deltaP) / dist);
+
+        // Gets total spring force along spring direction
         glm::vec3 springForce = (f1 + f2) * glm::normalize(deltaP);
 
         // Equal and opposite forces
@@ -190,18 +195,26 @@ void Cloth::inverseSpringForce(std::vector<Particle>& particles, std::map<Partic
         Particle& particle1 = *springs[i].particle1;
         Particle& particle2 = *springs[i].particle2;
 
+        // Get vector between particles
         glm::vec3 deltaP = particle1.position - particle2.position;
 
+        // Euclidean distance 
         float dist = glm::length(deltaP);
 
+        // If particles are not at rest
         if (dist > springs[i].restLength)
         {
+            // Get half the distance
             dist -= (springs[i].restLength);
             dist /= 2.0f;
+
+            // In the opposite direction
             deltaP = glm::normalize(deltaP);
             deltaP *= dist;
 
-            // Top vertices of cloth
+            // Apply (with proper direction) to each 
+            // velocity to evenutally brings springs
+            // to equilibrium
             velocities[&particle1] -= deltaP;
             velocities[&particle2] += deltaP;
         }
